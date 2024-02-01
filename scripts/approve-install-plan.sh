@@ -21,7 +21,7 @@ approve_install_plan(){
         timeout_cmd=gtimeout
     fi
     # shellcheck disable=SC2016
-    install_plan="$($timeout_cmd $timeout_secs bash -c 'while [[ "$(kubectl get subscription "'"$subscription_name"'" -n "'"$namespace"'" -o jsonpath="{$.status.installplan.name}")" == "" ]]; do sleep 2; done; echo $(kubectl get subscription service-mesh-operator -n "'"$namespace"'" -o jsonpath="{$.status.installplan.name}")')"
+    install_plan="$($timeout_cmd $timeout_secs bash -c 'while [[ "$(kubectl get subscription "'"$subscription_name"'" -n "'"$namespace"'" -o jsonpath="{$.status.installplan.name}")" == "" ]]; do sleep 2; done; echo $(kubectl get subscription "'"$subscription_name"'" -n "'"$namespace"'" -o jsonpath="{$.status.installplan.name}")')"
 
     if [[ $install_plan != "" ]]
     then
