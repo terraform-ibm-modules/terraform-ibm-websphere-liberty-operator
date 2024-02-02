@@ -1,33 +1,35 @@
-########################################################################################################################
-# Input variables
-########################################################################################################################
-
 variable "ibmcloud_api_key" {
   type        = string
-  description = "The IBM Cloud API Key"
+  description = "The IBM Cloud API Token"
   sensitive   = true
+}
+
+variable "prefix" {
+  type        = string
+  description = "Prefix for name of all resource created by this example"
+  default     = "wslop"
 }
 
 variable "region" {
   type        = string
   description = "Region to provision all resources created by this example"
-  default     = "us-south"
+  default     = "au-syd"
 }
 
-variable "prefix" {
+variable "ocp_version" {
+  description = "The version of the OpenShift cluster that should be provisioned (format 4.x)"
   type        = string
-  description = "Prefix to append to all resources created by this example"
-  default     = "basic"
+  default     = null
 }
 
 variable "resource_group" {
   type        = string
-  description = "The name of an existing resource group to provision resources in to. If not set a new resource group will be created using the prefix variable"
+  description = "An existing resource group name to use for this example, if unset a new resource group will be created"
   default     = null
 }
 
 variable "resource_tags" {
   type        = list(string)
   description = "Optional list of tags to be added to created resources"
-  default     = []
+  default     = ["websphere", "liberty", "operator"]
 }
