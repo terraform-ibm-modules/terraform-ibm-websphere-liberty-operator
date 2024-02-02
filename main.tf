@@ -1,6 +1,10 @@
 locals {
-  sleep_time_catalog_create                  = "60s"
-  sleep_time_operator_create                 = "120s"
+  # sleep times definition
+  sleep_time_catalog_create   = "60s"
+  sleep_time_operator_create  = "120s"
+  sleep_time_sampleapp_create = "30s"
+
+  # helm chart names
   ibm_operator_catalog_chart                 = "ibm-operator-catalog"
   websphere_liberty_operator_chart           = "websphere-liberty-operator"
   websphere_liberty_operator_group_chart     = "websphere-liberty-operator-group"
@@ -191,7 +195,7 @@ resource "kubernetes_namespace" "websphere_liberty_sampleapp_namespace" {
 }
 
 resource "helm_release" "websphere_liberty_operator_sampleapp" {
-  depends_on = [kubernetes_namespace.websphere_liberty_sampleapp_namespace]
+  depends_on = [kubernetes_namespace.websphere_liberty_sampleapp_namespace[0]]
   count      = var.install_wslo_sampleapp == true ? 1 : 0
 
   name              = "websphere-liberty-operator-sampleapp-helm-release"
@@ -225,9 +229,16 @@ resource "helm_release" "websphere_liberty_operator_sampleapp" {
   }
 }
 
-data "external" "websphere_liberty_operator_sampleapp_url" {
-  depends_on = [helm_release.websphere_liberty_operator_sampleapp]
+# waiting for the sample app to start before checking for the URL
+resource "time_sleep" "wait_sampleapp" {
+  depends_on = [helm_release.websphere_liberty_operator_sampleapp[0]]
   count      = var.install_wslo_sampleapp == true ? 1 : 0
+
+  create_duration = local.sleep_time_sampleapp_create
+}
+
+data "external" "websphere_liberty_operator_sampleapp_url" {
+  depends_on = [time_sleep.wait_sampleapp[0]]
   program    = ["/bin/bash", "${path.module}/scripts/get-sampleapp-url.sh"]
   query = {
     KUBECONFIG   = data.ibm_container_cluster_config.cluster_config.config_file_path

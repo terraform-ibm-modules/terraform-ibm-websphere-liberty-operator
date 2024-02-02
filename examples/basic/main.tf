@@ -123,6 +123,7 @@ module "websphere_liberty_operator" {
   source                               = "../.."
   region                               = var.region
   cluster_id                           = module.ocp_base.cluster_id
-  create_ws_liberty_operator_namespace = true # creating namespace as it is the first operator installed on the cluster
+  create_ws_liberty_operator_namespace = false
   install_wslo_sampleapp               = true
+  ibmcloud_api_key                     = var.ibmcloud_api_key
 }
