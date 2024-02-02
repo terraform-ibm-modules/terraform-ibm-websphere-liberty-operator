@@ -90,6 +90,7 @@ statement instead the previous block.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.6.0 |
+| <a name="requirement_external"></a> [external](#requirement\_external) | >=2.2.3 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.8.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.59.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.16.1 |
@@ -114,6 +115,7 @@ No modules.
 | [null_resource.confirm_websphere_liberty_operator_operational](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [time_sleep.wait_catalog](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [time_sleep.wait_websphere_liberty_operator](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [external_external.websphere_liberty_operator_sampleapp_url](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) | data source |
 | [ibm_container_cluster_config.cluster_config](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/container_cluster_config) | data source |
 
 ### Inputs
@@ -138,8 +140,9 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ws_liberty_operator_namespace"></a> [ws\_liberty\_operator\_namespace](#output\_ws\_liberty\_operator\_namespace) | Test output |
-| <a name="output_ws_liberty_operator_target_namespace"></a> [ws\_liberty\_operator\_target\_namespace](#output\_ws\_liberty\_operator\_target\_namespace) | Test output |
+| <a name="output_websphere_liberty_operator_sampleapp_url"></a> [websphere\_liberty\_operator\_sampleapp\_url](#output\_websphere\_liberty\_operator\_sampleapp\_url) | WebSphere Liberty sample application URL |
+| <a name="output_ws_liberty_operator_namespace"></a> [ws\_liberty\_operator\_namespace](#output\_ws\_liberty\_operator\_namespace) | Namespace where the WebSphere Liberty operator is installed |
+| <a name="output_ws_liberty_operator_target_namespace"></a> [ws\_liberty\_operator\_target\_namespace](#output\_ws\_liberty\_operator\_target\_namespace) | Namespace watched by the WebSphere Liberty operator |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set up steps for contributors to follow -->

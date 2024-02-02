@@ -118,7 +118,7 @@ resource "kubernetes_namespace" "websphere_liberty_operator_namespace" {
 }
 
 resource "helm_release" "websphere_liberty_operator" {
-  depends_on = [time_sleep.wait_catalog, kubernetes_namespace.websphere_liberty_operator_namespace[0]]
+  depends_on = [time_sleep.wait_catalog[0], kubernetes_namespace.websphere_liberty_operator_namespace[0]]
 
   name              = "websphere-liberty-operator-helm-release"
   chart             = "${path.module}/chart/${local.websphere_liberty_operator_chart}"
@@ -190,8 +190,6 @@ resource "kubernetes_namespace" "websphere_liberty_sampleapp_namespace" {
   }
 }
 
-
-
 resource "helm_release" "websphere_liberty_operator_sampleapp" {
   depends_on = [kubernetes_namespace.websphere_liberty_sampleapp_namespace]
   count      = var.install_wslo_sampleapp == true ? 1 : 0
@@ -225,12 +223,15 @@ resource "helm_release" "websphere_liberty_operator_sampleapp" {
     type  = "string"
     value = var.wslo_sampleapp_image
   }
+}
 
-  provisioner "local-exec" {
-    command     = "${path.module}/scripts/approve-install-plan.sh ${var.ws_liberty_operator_namespace}"
-    interpreter = ["/bin/bash", "-c"]
-    environment = {
-      KUBECONFIG = data.ibm_container_cluster_config.cluster_config.config_file_path
-    }
+data "external" "websphere_liberty_operator_sampleapp_url" {
+  depends_on = [helm_release.websphere_liberty_operator_sampleapp]
+  count      = var.install_wslo_sampleapp == true ? 1 : 0
+  program    = ["/bin/bash", "${path.module}/scripts/get-sampleapp-url.sh"]
+  query = {
+    KUBECONFIG   = data.ibm_container_cluster_config.cluster_config.config_file_path
+    APPNAMESPACE = var.wslo_sampleapp_namespace
+    APPNAME      = var.wslo_sampleapp_name
   }
 }
