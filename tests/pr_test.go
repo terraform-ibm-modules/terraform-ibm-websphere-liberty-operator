@@ -12,10 +12,10 @@ import (
 const resourceGroup = "geretain-test-resources"
 const basicExampleDir = "examples/basic"
 
-func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
+func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
 		Testing:       t,
-		TerraformDir:  dir,
+		TerraformDir:  exampleDir,
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
 	})
