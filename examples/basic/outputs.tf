@@ -7,18 +7,8 @@ output "resource_group_name" {
   value       = module.resource_group.resource_group_name
 }
 
-output "cluster_subnets" {
-  description = "Subnets created in the VPC for the cluster"
-  value       = ibm_is_subnet.cluster_subnets
-}
-
-output "resource_group_id" {
-  description = "Resource group ID"
-  value       = module.resource_group.resource_group_id
-}
-
 output "cluster_id" {
-  description = "Resource group name"
+  description = "Cluster ID"
   value       = module.ocp_base.cluster_id
 }
 
