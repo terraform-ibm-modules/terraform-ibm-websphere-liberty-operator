@@ -22,7 +22,7 @@ To be filled and enhanced.
 ## Overview
 * [terraform-ibm-websphere-liberty-operator](#terraform-ibm-websphere-liberty-operator)
 * [Examples](./examples)
-    * [Basic example](./examples/basic)
+    * [Basic example](./examples/complete)
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
