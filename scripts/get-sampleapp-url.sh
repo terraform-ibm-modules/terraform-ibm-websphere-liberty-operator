@@ -35,5 +35,4 @@ else
     fi
 fi
 
-# jq -n -r --arg sampleapp_url "${SAMPLEAPPROUTE}" '{"sampleapp_url":$sampleapp_url}'
 echo -n '{"sampleapp_url":"'"${SAMPLEAPPROUTE}"'"}'
