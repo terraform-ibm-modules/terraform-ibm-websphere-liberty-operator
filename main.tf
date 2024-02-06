@@ -44,6 +44,11 @@ resource "kubernetes_namespace" "helm_release_operator_namespace" {
   }
 }
 
+locals {
+  ibm_operator_catalog_version = "v1.25-20240202.161709-9DAF3E648@sha256:92e28be4af60f68c656f52b2445aafcc052fcd0390479b868c5b0ba2d465a25a"
+  ibm_operator_catalog_path    = "icr.io/cpopen/ibm-operator-catalog"
+}
+
 # if add_ibm_operator_catalog is true going on with adding the IBM Operator Catalog source
 resource "helm_release" "ibm_operator_catalog" {
   depends_on = [data.ibm_container_cluster_config.cluster_config, kubernetes_namespace.helm_release_operator_namespace[0]]
@@ -60,6 +65,17 @@ resource "helm_release" "ibm_operator_catalog" {
   wait              = true
 
   disable_openapi_validation = false
+
+  set {
+    name  = "image.path"
+    type  = "string"
+    value = local.ibm_operator_catalog_path
+  }
+  set {
+    name  = "image.version"
+    type  = "string"
+    value = local.ibm_operator_catalog_version
+  }
 }
 
 # waiting for the catalog to be configured and correctly pulled
@@ -194,6 +210,11 @@ resource "kubernetes_namespace" "websphere_liberty_sampleapp_namespace" {
   }
 }
 
+locals {
+  websphere_liberty_operator_sampleapp_image_path    = "icr.io/appcafe/open-liberty/samples/getting-started"
+  websphere_liberty_operator_sampleapp_image_version = "latest@sha256:d735c2ceae5945a0f20adcbcb04e55472d2520b6d1abb6d3049c8521234d3b7a"
+}
+
 resource "helm_release" "websphere_liberty_operator_sampleapp" {
   depends_on = [kubernetes_namespace.websphere_liberty_sampleapp_namespace[0]]
   count      = var.install_wslo_sampleapp == true ? 1 : 0
@@ -211,13 +232,24 @@ resource "helm_release" "websphere_liberty_operator_sampleapp" {
   disable_openapi_validation = false
 
   set {
-    name  = "name"
+    name  = "application.image.path"
+    type  = "string"
+    value = local.websphere_liberty_operator_sampleapp_image_path
+  }
+  set {
+    name  = "application.image.version"
+    type  = "string"
+    value = local.websphere_liberty_operator_sampleapp_image_version
+  }
+
+  set {
+    name  = "application.name"
     type  = "string"
     value = var.wslo_sampleapp_name
   }
 
   set {
-    name  = "namespace"
+    name  = "application.namespace"
     type  = "string"
     value = var.wslo_sampleapp_namespace
   }

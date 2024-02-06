@@ -3,7 +3,7 @@
 ##############################################################################
 
 variable "ibmcloud_api_key" {
-  description = "APIkey that's associated with the account to use, set via environment variable TF_VAR_ibmcloud_api_key"
+  description = "APIkey that's associated with the account to use"
   type        = string
   sensitive   = true
   default     = null

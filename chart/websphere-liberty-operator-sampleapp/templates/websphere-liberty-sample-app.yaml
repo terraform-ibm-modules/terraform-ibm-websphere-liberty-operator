@@ -9,6 +9,6 @@ spec:
     edition: IBM WebSphere Application Server
     productEntitlementSource: Standalone
   applicationImage: >-
-    {{ .Values.application.image }}
+    {{ .Values.application.image.path }}:{{ required "Liberty sample app version must be provided" .Values.application.image.version }}
   manageTLS: true
   expose: true

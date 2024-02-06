@@ -7,7 +7,7 @@ spec:
   displayName: IBM Operator Catalog
   publisher: IBM
   sourceType: grpc
-  image: icr.io/cpopen/ibm-operator-catalog:latest
+  image: '{{ .Values.image.path }}:{{ required "IBM Operator catalog version must be provided" .Values.image.version }}'
   updateStrategy:
     registryPoll:
       interval: 45m
