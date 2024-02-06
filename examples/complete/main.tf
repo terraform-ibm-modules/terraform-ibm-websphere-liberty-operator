@@ -21,6 +21,16 @@ resource "ibm_is_vpc" "vpc" {
   tags                      = var.resource_tags
 }
 
+# public gws
+resource "ibm_is_public_gateway" "gateway" {
+  for_each       = toset(["1", "2", "3"])
+  name           = "${var.prefix}-gateway-${each.key}"
+  vpc            = ibm_is_vpc.vpc.id
+  resource_group = module.resource_group.resource_group_id
+  zone           = "${var.region}-${each.key}"
+}
+
+
 resource "ibm_is_subnet" "cluster_subnets" {
   for_each                 = toset(["1", "2", "3"])
   name                     = "${var.prefix}-subnet-${each.key}"
@@ -28,6 +38,7 @@ resource "ibm_is_subnet" "cluster_subnets" {
   resource_group           = module.resource_group.resource_group_id
   zone                     = "${var.region}-${each.key}"
   total_ipv4_address_count = 256
+  public_gateway           = ibm_is_public_gateway.gateway[each.key].id
 }
 
 ##############################################################################
@@ -78,6 +89,7 @@ locals {
 }
 
 module "ocp_base" {
+  depends_on           = [ibm_is_vpc.vpc, ibm_is_subnet.cluster_subnets, ibm_is_public_gateway.gateway]
   source               = "terraform-ibm-modules/base-ocp-vpc/ibm"
   version              = "3.10.1"
   cluster_name         = "${var.prefix}-cluster"
