@@ -106,7 +106,7 @@
               {
                 "diagram": {
                   "caption": "Websphere installation on a landing zone VPC cluster.",
-                  "url": "",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/main/reference-architecture/was_operator.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "Websphere installation on a landing zone VPC cluster."
