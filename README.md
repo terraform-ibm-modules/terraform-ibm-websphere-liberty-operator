@@ -15,6 +15,8 @@ Update status and "latest release" badges:
 <!-- Add a description of module(s) in this repo -->
 Use this module to install a WebSphere® Liberty operator and create an instance of WebSphere Liberty operator on IBM Cloud Red Hat OpenShift cluster on VPC Gen2.
 
+For more information about the WebSphere Liberty operator refer to the official documentation avaiable [here](https://www.ibm.com/docs/en/was-liberty/core?topic=container-running-websphere-liberty-operator)
+
 <!-- Below content is automatically populated via pre-commit hook -->
 <!-- BEGIN OVERVIEW HOOK -->
 ## Overview

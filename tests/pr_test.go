@@ -10,7 +10,7 @@ import (
 
 // Use existing resource group
 const resourceGroup = "geretain-test-resources"
-const basicExampleDir = "examples/complete"
+const completeExampleDir = "examples/complete"
 
 func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
@@ -25,7 +25,7 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 func TestRunCompleteExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "wslo", basicExampleDir)
+	options := setupOptions(t, "wslo", completeExampleDir)
 
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
@@ -35,7 +35,7 @@ func TestRunCompleteExample(t *testing.T) {
 func TestRunUpgradeExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "wslo-upg", basicExampleDir)
+	options := setupOptions(t, "wslo-upg", completeExampleDir)
 
 	output, err := options.RunTestUpgrade()
 	if !options.UpgradeTestSkipped {
