@@ -1,7 +1,6 @@
 application:
   name: websphereliberty-app-sample
   namespace: samplelibertyapp
-  # image: icr.io/appcafe/open-liberty/samples/getting-started@sha256:e22dd56a05e44618a10d275d3ff07a38eb364c0f04f86ffe9618d83dd5467860
   image:
-    path:
-    version:
+    path: "icr.io/appcafe/open-liberty/samples/getting-started"
+    version: "latest@sha256:d735c2ceae5945a0f20adcbcb04e55472d2520b6d1abb6d3049c8521234d3b7a"
