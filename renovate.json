@@ -3,7 +3,7 @@
   "extends": ["github>terraform-ibm-modules/common-dev-assets:commonRenovateConfig"],
   "packageRules": [
     {
-      "description": "Do not allow SLZ version to be updated as we need to lock into version XXX",
+      "description": "Do not allow SLZ version to be updated as we need to lock into version v5.1.1-rc",
       "enabled": false,
       "matchFileNames": [
         "tests/resources/**"
