@@ -33,7 +33,7 @@ TF_VARS_FILE="terraform.tfvars"
   rg_var_value="${prefix_var_value}-management-rg"
   region_var_name="region"
   cluster_id_var_name="cluster_id"
-  cluster_id_value=$(terraform output -state=terraform.tfstate -raw cluster_id)
+  cluster_id_value=$(terraform output -state=terraform.tfstate -raw management_cluster_id)
 
   echo "Appending '${prefix_var_name}', '${cluster_id_var_name}', '${rg_var_name}' and '${region_var_name}' input variable values to ${JSON_FILE}.."
 

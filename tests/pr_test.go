@@ -2,7 +2,6 @@
 package test
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/stretchr/testify/require"
 	"os"
@@ -93,22 +92,6 @@ func TestRunSLZExample(t *testing.T) {
 	if existErr != nil {
 		assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
 	} else {
-		outputClusterJson := terraform.OutputJson(t, existingTerraformOptions, "cluster_data")
-
-		var clusterID string
-		var clusters []struct {
-			ClusterID string `json:"cluster_id"`
-		}
-		// Unmarshal the JSON data into the struct
-		if err := json.Unmarshal([]byte(outputClusterJson), &clusters); err != nil {
-			fmt.Println(err)
-			return
-		}
-		// Loop through the clusters and find the cluster_id
-		for _, cluster := range clusters {
-			clusterID = cluster.ClusterID
-		}
-
 		// ------------------------------------------------------------------------------------
 		// Deploy WAS extension
 		// ------------------------------------------------------------------------------------
@@ -119,8 +102,8 @@ func TestRunSLZExample(t *testing.T) {
 			// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
 			ImplicitRequired: false,
 			TerraformVars: map[string]interface{}{
-				"cluster_id": clusterID,
-				"region":     region,
+				"cluster_id": terraform.Output(t, existingTerraformOptions, "management_cluster_id"),
+				"region":     terraform.Output(t, existingTerraformOptions, "region"),
 			},
 		})
 
