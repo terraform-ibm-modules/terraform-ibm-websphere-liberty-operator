@@ -84,7 +84,7 @@ func TestRunSLZExample(t *testing.T) {
 		},
 		// Set Upgrade to true to ensure latest version of providers and modules are used by terratest.
 		// This is the same as setting the -upgrade=true flag with terraform.
-		Upgrade: false,
+		Upgrade: true,
 	})
 
 	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
