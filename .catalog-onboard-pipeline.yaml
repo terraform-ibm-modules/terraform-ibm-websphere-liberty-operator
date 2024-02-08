@@ -4,7 +4,7 @@ offerings:
   - name: deploy-arch-ibm-slz-was-operator
     kind: solution
     catalog_id: 7df1e4ca-d54c-4fd0-82ce-3d13247308cd
-    offering_id: b09f6c41-78df-4ec5-8c85-ff3895395b0e
+    offering_id: 70e68cb4-7026-4329-9faa-8a1e56444aba
     variations:
       - name: standard
         mark_ready: false
