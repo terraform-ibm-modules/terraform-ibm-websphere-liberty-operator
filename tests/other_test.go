@@ -2,15 +2,16 @@
 package test
 
 import (
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestRunBasicExample(t *testing.T) {
+func TestRunCompleteExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "mod-template-basic", "examples/basic")
+	options := setupOptions(t, "wslo", completeExampleDir)
 
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")

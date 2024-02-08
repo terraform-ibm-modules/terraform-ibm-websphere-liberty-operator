@@ -1,8 +1,8 @@
 ########################################################################################################################
-# Provider config
+# Outputs
 ########################################################################################################################
 
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.region
+output "websphere_liberty_operator" {
+  description = "Resource group name"
+  value       = module.websphere_liberty_operator
 }

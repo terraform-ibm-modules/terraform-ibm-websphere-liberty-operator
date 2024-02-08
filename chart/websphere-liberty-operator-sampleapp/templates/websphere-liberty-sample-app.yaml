@@ -1,0 +1,14 @@
+apiVersion: liberty.websphere.ibm.com/v1
+kind: WebSphereLibertyApplication
+metadata:
+  name: {{ .Values.application.name }}
+  namespace: {{ .Values.application.namespace }}
+spec:
+  license:
+    accept: true
+    edition: IBM WebSphere Application Server
+    productEntitlementSource: Standalone
+  applicationImage: >-
+    {{ .Values.application.image.path }}:{{ required "Liberty sample app version must be provided" .Values.application.image.version }}
+  manageTLS: true
+  expose: true
