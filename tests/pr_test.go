@@ -2,13 +2,19 @@
 package test
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/stretchr/testify/require"
 	"os"
 	"strings"
 	"testing"
 
+	"github.com/gruntwork-io/terratest/modules/files"
+	"github.com/gruntwork-io/terratest/modules/logger"
+	"github.com/gruntwork-io/terratest/modules/random"
+	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 )
 
@@ -55,7 +61,7 @@ func TestRunSLZExample(t *testing.T) {
 	// Deploy SLZ ROKS Cluster first since it is needed for the WAS extension input
 	// ------------------------------------------------------------------------------------
 
-	prefix := fmt.Sprintf("was-slz-%s", strings.ToLower(random.UniqueId()))
+	prefix := fmt.Sprintf("was-%s", strings.ToLower(random.UniqueId()))
 	realTerraformDir := "./resources"
 	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
 	tags := common.GetTagsFromTravis()
@@ -79,7 +85,7 @@ func TestRunSLZExample(t *testing.T) {
 		},
 		// Set Upgrade to true to ensure latest version of providers and modules are used by terratest.
 		// This is the same as setting the -upgrade=true flag with terraform.
-		Upgrade: false,
+		Upgrade: true,
 	})
 
 	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
@@ -87,6 +93,21 @@ func TestRunSLZExample(t *testing.T) {
 	if existErr != nil {
 		assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
 	} else {
+		outputClusterJson := terraform.OutputJson(t, existingTerraformOptions, "cluster_data")
+
+		var clusterID string
+		var clusters []struct {
+			ClusterID string `json:"cluster_id"`
+		}
+		// Unmarshal the JSON data into the struct
+		if err := json.Unmarshal([]byte(outputClusterJson), &clusters); err != nil {
+			fmt.Println(err)
+			return
+		}
+		// Loop through the clusters and find the cluster_id
+		for _, cluster := range clusters {
+			clusterID = cluster.ClusterID
+		}
 
 		// ------------------------------------------------------------------------------------
 		// Deploy WAS extension
@@ -98,10 +119,8 @@ func TestRunSLZExample(t *testing.T) {
 			// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
 			ImplicitRequired: false,
 			TerraformVars: map[string]interface{}{
-				"prefix":              prefix,
-				"region":              region,
-				"resource_group":      fmt.Sprintf("%s-was-rg", prefix),
-				"landing_zone_prefix": terraform.Output(t, existingTerraformOptions, "prefix"),
+				"cluster_id": clusterID,
+				"region":     region,
 			},
 		})
 
