@@ -60,7 +60,7 @@ func TestRunSLZExample(t *testing.T) {
 	// Deploy SLZ ROKS Cluster first since it is needed for the WAS extension input
 	// ------------------------------------------------------------------------------------
 
-	prefix := fmt.Sprintf("was-slz-%s", strings.ToLower(random.UniqueId()))
+	prefix := fmt.Sprintf("was-%s", strings.ToLower(random.UniqueId()))
 	realTerraformDir := "./resources"
 	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
 	tags := common.GetTagsFromTravis()
