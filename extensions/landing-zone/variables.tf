@@ -1,12 +1,12 @@
 variable "ibmcloud_api_key" {
   type        = string
-  description = "The IBM Cloud API Token"
+  description = "APIkey associated with the account to use"
   sensitive   = true
 }
 
 variable "region" {
   type        = string
-  description = "Region to provision all resources created by this example"
+  description = "Region to provision all resources created by this solution"
   default     = "au-syd"
 }
 

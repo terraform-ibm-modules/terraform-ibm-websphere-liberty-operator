@@ -20,14 +20,12 @@ locals {
 
 data "ibm_container_cluster_config" "cluster_config" {
   cluster_name_id = var.cluster_id
-  config_dir      = "${path.module}/kubeconfig"                                                             # See https://github.ibm.com/GoldenEye/issues/issues/552
-  endpoint_type   = var.cluster_config_endpoint_type != "default" ? var.cluster_config_endpoint_type : null # null represents default
+  config_dir      = "${path.module}/kubeconfig"
+  endpoint_type   = var.cluster_config_endpoint_type != "default" ? var.cluster_config_endpoint_type : null
 }
 
 # creating the namespace to deploy the helm releases to install the WebSphere Liberty Operator
 resource "kubernetes_namespace" "helm_release_operator_namespace" {
-  count = var.add_ibm_operator_catalog == true ? 1 : 0
-
   metadata {
     name = var.operator_helm_release_namespace
   }
@@ -45,24 +43,26 @@ resource "kubernetes_namespace" "helm_release_operator_namespace" {
 }
 
 locals {
-  ibm_operator_catalog_version = "v1.25-20240202.161709-9DAF3E648@sha256:92e28be4af60f68c656f52b2445aafcc052fcd0390479b868c5b0ba2d465a25a"
+  ibm_operator_catalog_version = "v1.25-20240202.161709-9DAF3E648@sha256:92e28be4af60f68c656f52b2445aafcc052fcd0390479b868c5b0ba2d465a25a" # datasource: icr.io/cpopen/ibm-operator-catalog
   ibm_operator_catalog_path    = "icr.io/cpopen/ibm-operator-catalog"
 }
 
 # if add_ibm_operator_catalog is true going on with adding the IBM Operator Catalog source
 resource "helm_release" "ibm_operator_catalog" {
-  depends_on = [data.ibm_container_cluster_config.cluster_config, kubernetes_namespace.helm_release_operator_namespace[0]]
+  depends_on = [kubernetes_namespace.helm_release_operator_namespace]
   count      = var.add_ibm_operator_catalog == true ? 1 : 0
 
-  name              = "ibm-operator-catalog-helm-release"
-  chart             = "${path.module}/chart/${local.ibm_operator_catalog_chart}"
-  namespace         = var.operator_helm_release_namespace
-  create_namespace  = false
-  timeout           = 300
-  dependency_update = true
-  force_update      = false
-  cleanup_on_fail   = false
-  wait              = true
+  name             = "ibm-operator-catalog-helm-release"
+  chart            = "${path.module}/chart/${local.ibm_operator_catalog_chart}"
+  namespace        = var.operator_helm_release_namespace
+  create_namespace = false
+  timeout          = 300
+  # dependency_update = true
+  # force_update      = false
+  force_update    = true
+  cleanup_on_fail = false
+  wait            = true
+  recreate_pods   = true
 
   disable_openapi_validation = false
 
@@ -89,17 +89,19 @@ resource "time_sleep" "wait_catalog" {
 # if ws_liberty_operator_target_namespace != null the operator group must be created
 resource "helm_release" "websphere_liberty_operator_group" {
   count      = var.ws_liberty_operator_target_namespace != null ? 1 : 0
-  depends_on = [time_sleep.wait_catalog[0]]
+  depends_on = [time_sleep.wait_catalog[0], kubernetes_namespace.helm_release_operator_namespace]
 
-  name              = "websphere-liberty-operator-group-helm-release"
-  chart             = "${path.module}/chart/${local.websphere_liberty_operator_group_chart}"
-  namespace         = var.operator_helm_release_namespace
-  create_namespace  = false
-  timeout           = 300
-  dependency_update = true
-  force_update      = false
-  cleanup_on_fail   = false
-  wait              = true
+  name             = "websphere-liberty-operator-group-helm-release"
+  chart            = "${path.module}/chart/${local.websphere_liberty_operator_group_chart}"
+  namespace        = var.operator_helm_release_namespace
+  create_namespace = false
+  timeout          = 300
+  # dependency_update = true
+  force_update = true
+  # force_update      = false
+  cleanup_on_fail = false
+  wait            = true
+  recreate_pods   = true
 
   disable_openapi_validation = false
 
@@ -118,8 +120,7 @@ resource "helm_release" "websphere_liberty_operator_group" {
 }
 
 resource "kubernetes_namespace" "websphere_liberty_operator_namespace" {
-  depends_on = [helm_release.websphere_liberty_operator_group[0]]
-  count      = var.create_ws_liberty_operator_namespace == true ? 1 : 0
+  count = var.create_ws_liberty_operator_namespace == true ? 1 : 0
 
   metadata {
     name = var.ws_liberty_operator_namespace
@@ -138,17 +139,19 @@ resource "kubernetes_namespace" "websphere_liberty_operator_namespace" {
 }
 
 resource "helm_release" "websphere_liberty_operator" {
-  depends_on = [time_sleep.wait_catalog[0], kubernetes_namespace.websphere_liberty_operator_namespace[0]]
+  depends_on = [time_sleep.wait_catalog[0], helm_release.websphere_liberty_operator_group[0], kubernetes_namespace.websphere_liberty_operator_namespace[0]]
 
-  name              = "websphere-liberty-operator-helm-release"
-  chart             = "${path.module}/chart/${local.websphere_liberty_operator_chart}"
-  namespace         = var.operator_helm_release_namespace
-  create_namespace  = false
-  timeout           = 300
-  dependency_update = true
-  force_update      = false
-  cleanup_on_fail   = false
-  wait              = true
+  name             = "websphere-liberty-operator-helm-release"
+  chart            = "${path.module}/chart/${local.websphere_liberty_operator_chart}"
+  namespace        = var.operator_helm_release_namespace
+  create_namespace = false
+  timeout          = 300
+  # dependency_update = true
+  # force_update      = false
+  force_update    = true
+  cleanup_on_fail = false
+  wait            = true
+  recreate_pods   = true
 
   disable_openapi_validation = false
 
@@ -212,22 +215,24 @@ resource "kubernetes_namespace" "websphere_liberty_sampleapp_namespace" {
 
 locals {
   websphere_liberty_operator_sampleapp_image_path    = "icr.io/appcafe/open-liberty/samples/getting-started"
-  websphere_liberty_operator_sampleapp_image_version = "latest@sha256:d735c2ceae5945a0f20adcbcb04e55472d2520b6d1abb6d3049c8521234d3b7a"
+  websphere_liberty_operator_sampleapp_image_version = "latest@sha256:d735c2ceae5945a0f20adcbcb04e55472d2520b6d1abb6d3049c8521234d3b7a" # datasource: icr.io/appcafe/open-liberty/samples/getting-started
 }
 
 resource "helm_release" "websphere_liberty_operator_sampleapp" {
   depends_on = [kubernetes_namespace.websphere_liberty_sampleapp_namespace[0]]
   count      = var.install_wslo_sampleapp == true ? 1 : 0
 
-  name              = "websphere-liberty-operator-sampleapp-helm-release"
-  chart             = "${path.module}/chart/${local.websphere_liberty_operator_sampleapp_chart}"
-  namespace         = var.operator_helm_release_namespace
-  create_namespace  = false
-  timeout           = 300
-  dependency_update = true
-  force_update      = false
-  cleanup_on_fail   = false
-  wait              = true
+  name             = "websphere-liberty-operator-sampleapp-helm-release"
+  chart            = "${path.module}/chart/${local.websphere_liberty_operator_sampleapp_chart}"
+  namespace        = var.operator_helm_release_namespace
+  create_namespace = false
+  timeout          = 300
+  # dependency_update = true
+  # force_update      = false
+  force_update    = true
+  cleanup_on_fail = false
+  wait            = true
+  recreate_pods   = true
 
   disable_openapi_validation = false
 
@@ -254,11 +259,6 @@ resource "helm_release" "websphere_liberty_operator_sampleapp" {
     value = var.wslo_sampleapp_namespace
   }
 
-  set {
-    name  = "image"
-    type  = "string"
-    value = var.wslo_sampleapp_image
-  }
 }
 
 # waiting for the sample app to start before checking for the URL

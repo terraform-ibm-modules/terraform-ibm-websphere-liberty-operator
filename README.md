@@ -89,12 +89,12 @@ statement instead the previous block.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.6.0 |
-| <a name="requirement_external"></a> [external](#requirement\_external) | >=2.2.3 |
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.8.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.59.0 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.16.1 |
-| <a name="requirement_null"></a> [null](#requirement\_null) | >= 3.2.1 |
-| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1 |
+| <a name="requirement_external"></a> [external](#requirement\_external) | >=2.2.3, <3.0.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.8.0, <3.0.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.59.0, < 2.0.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.16.1, <3.0.0 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | >= 3.2.1, < 4.0.0 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1, < 1.0.0 |
 
 ### Modules
 
@@ -128,11 +128,10 @@ No modules.
 | <a name="input_create_ws_liberty_operator_namespace"></a> [create\_ws\_liberty\_operator\_namespace](#input\_create\_ws\_liberty\_operator\_namespace) | Flag to create the namespace where to deploy the WebSphere Liberty Operator. Default to false | `bool` | `false` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | APIkey that's associated with the account to use | `string` | `null` | no |
 | <a name="input_install_wslo_sampleapp"></a> [install\_wslo\_sampleapp](#input\_install\_wslo\_sampleapp) | Flag to deploy the WebSphere Liberty sample application. Default to false | `bool` | `false` | no |
-| <a name="input_operator_helm_release_namespace"></a> [operator\_helm\_release\_namespace](#input\_operator\_helm\_release\_namespace) | Namespace to deploy the helm releases. Default to liberty-operator-helm-release | `string` | `"liberty-operator-helm-release"` | no |
+| <a name="input_operator_helm_release_namespace"></a> [operator\_helm\_release\_namespace](#input\_operator\_helm\_release\_namespace) | Namespace to deploy the helm releases. Default to liberty-operator-helm-release | `string` | `"liberty-operator"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Cluster region | `string` | n/a | yes |
 | <a name="input_ws_liberty_operator_namespace"></a> [ws\_liberty\_operator\_namespace](#input\_ws\_liberty\_operator\_namespace) | Namespace to install the WebSphere Liberty Operator. Default to openshift-operators | `string` | `"openshift-operators"` | no |
 | <a name="input_ws_liberty_operator_target_namespace"></a> [ws\_liberty\_operator\_target\_namespace](#input\_ws\_liberty\_operator\_target\_namespace) | Namespace to be watched by the WebSphere Liberty Operator. Default to null (operator to watch all namespaces) | `string` | `null` | no |
-| <a name="input_wslo_sampleapp_image"></a> [wslo\_sampleapp\_image](#input\_wslo\_sampleapp\_image) | Image path to pull the WebSphere Liberty sample application | `string` | `"icr.io/appcafe/open-liberty/samples/getting-started@sha256:e22dd56a05e44618a10d275d3ff07a38eb364c0f04f86ffe9618d83dd5467860"` | no |
 | <a name="input_wslo_sampleapp_name"></a> [wslo\_sampleapp\_name](#input\_wslo\_sampleapp\_name) | Application name to use for the WebSphere Liberty sample application | `string` | `"websphereliberty-app-sample"` | no |
 | <a name="input_wslo_sampleapp_namespace"></a> [wslo\_sampleapp\_namespace](#input\_wslo\_sampleapp\_namespace) | Namespace to deploy the WebSphere Liberty sample application | `string` | `"samplelibertyapp"` | no |
 

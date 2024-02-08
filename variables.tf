@@ -24,7 +24,7 @@ variable "cluster_id" {
 variable "operator_helm_release_namespace" {
   type        = string
   description = "Namespace to deploy the helm releases. Default to liberty-operator-helm-release"
-  default     = "liberty-operator-helm-release"
+  default     = "liberty-operator"
   nullable    = false
 }
 
@@ -81,10 +81,4 @@ variable "wslo_sampleapp_namespace" {
   description = "Namespace to deploy the WebSphere Liberty sample application"
   type        = string
   default     = "samplelibertyapp"
-}
-
-variable "wslo_sampleapp_image" {
-  description = "Image path to pull the WebSphere Liberty sample application"
-  type        = string
-  default     = "icr.io/appcafe/open-liberty/samples/getting-started@sha256:e22dd56a05e44618a10d275d3ff07a38eb364c0f04f86ffe9618d83dd5467860"
 }
