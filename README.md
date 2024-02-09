@@ -13,7 +13,7 @@ Update status and "latest release" badges:
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 <!-- Add a description of module(s) in this repo -->
-Use this module to install WebSphere Application Server Liberty on IBM Cloud Red Hat OpenShift Container Platform on VPC landing zone by deploying IBM WebSphere Liberty operator.
+Use this module to install a WebSphere Liberty operator on your Red Hat OpenShift Container Platform on VPC landing zone.
 
 For more information about the IBM WebSphere Liberty operator refer to the official documentation avaiable [here](https://www.ibm.com/docs/en/was-liberty/core?topic=container-running-websphere-liberty-operator)
 
