@@ -7,7 +7,7 @@ variable "ibmcloud_api_key" {
 variable "region" {
   type        = string
   description = "Region to provision all resources created by this solution"
-  default     = "au-syd"
+  nullable    = false
 }
 
 variable "cluster_id" {
@@ -36,13 +36,13 @@ variable "create_ws_liberty_operator_namespace" {
 
 variable "ws_liberty_operator_namespace" {
   type        = string
-  description = "Namespace to install the WebSphere Liberty Operator. Default to openshift-operators"
+  description = "Namespace to install the IBM WebSphere Liberty operator. Default to openshift-operators"
   default     = "openshift-operators"
 }
 
 variable "ws_liberty_operator_target_namespace" {
   type        = string
-  description = "Namespace to be watched by the WebSphere Liberty Operator. Default to null (operator to watch all namespaces)"
+  description = "Namespace to be watched by the IBM WebSphere Liberty operator. Default to null (operator to watch all namespaces)"
   default     = null
 }
 
@@ -58,19 +58,19 @@ variable "cluster_config_endpoint_type" {
 }
 
 variable "install_wslo_sampleapp" {
-  description = "Flag to deploy the WebSphere Liberty sample application. Default to false"
+  description = "Flag to deploy the WebSphere Application Server Liberty sample application. Default to true"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "wslo_sampleapp_name" {
-  description = "Application name to use for the WebSphere Liberty sample application"
+  description = "Application name to use for the WebSphere Application Server Liberty sample application"
   type        = string
   default     = "websphereliberty-app-sample"
 }
 
 variable "wslo_sampleapp_namespace" {
-  description = "Namespace to deploy the WebSphere Liberty sample application"
+  description = "Namespace to deploy the WebSphere Application Server Liberty sample application"
   type        = string
   default     = "samplelibertyapp"
 }

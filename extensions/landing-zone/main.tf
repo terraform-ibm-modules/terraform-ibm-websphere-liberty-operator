@@ -4,8 +4,8 @@
 
 data "ibm_container_cluster_config" "cluster_config" {
   cluster_name_id = var.cluster_id
-  # config_dir      = "../../kubeconfig"
-  endpoint_type = var.cluster_config_endpoint_type != "default" ? var.cluster_config_endpoint_type : null # null represents default
+  config_dir      = "../../kubeconfig"
+  endpoint_type   = var.cluster_config_endpoint_type != "default" ? var.cluster_config_endpoint_type : null # null represents default
 }
 
 module "websphere_liberty_operator" {
@@ -22,4 +22,8 @@ module "websphere_liberty_operator" {
   wslo_sampleapp_name                  = var.wslo_sampleapp_name
   wslo_sampleapp_namespace             = var.wslo_sampleapp_namespace
   operator_helm_release_namespace      = var.operator_helm_release_namespace
+}
+
+locals {
+  websphere_liberty_operator_sampleapp_url = var.install_wslo_sampleapp == true ? "https://${module.websphere_liberty_operator.websphere_liberty_operator_sampleapp_url}" : null
 }
