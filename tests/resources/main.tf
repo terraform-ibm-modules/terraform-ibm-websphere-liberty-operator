@@ -19,7 +19,7 @@ module "landing_zone" {
       "slz-appid-key"
     ],
     "name": "appid",
-    "resource_group": "wlslz-service-rg",
+    "resource_group": "vbwls-service-rg",
     "use_appid": false,
     "use_data": false
   },
@@ -27,22 +27,22 @@ module "landing_zone" {
     "add_route": true,
     "collector_bucket_name": "atracker-bucket",
     "receive_global_events": true,
-    "resource_group": "wlslz-service-rg"
+    "resource_group": "vbwls-service-rg"
   },
   "clusters": [
     {
-      "boot_volume_crk_name": "wlslz-roks-key",
+      "boot_volume_crk_name": "vbwls-roks-key",
       "cos_name": "cos",
       "entitlement": null,
       "kms_config": {
-        "crk_name": "wlslz-roks-key",
+        "crk_name": "vbwls-roks-key",
         "private_endpoint": true
       },
       "kube_type": "openshift",
       "kube_version": "4.14_openshift",
       "machine_type": "bx2.16x64",
       "name": "management-cluster",
-      "resource_group": "wlslz-management-rg",
+      "resource_group": "vbwls-management-rg",
       "subnet_names": [
         "vsi-zone-1",
         "vsi-zone-2",
@@ -54,18 +54,18 @@ module "landing_zone" {
       "workers_per_subnet": 1
     },
     {
-      "boot_volume_crk_name": "wlslz-roks-key",
+      "boot_volume_crk_name": "vbwls-roks-key",
       "cos_name": "cos",
       "entitlement": null,
       "kms_config": {
-        "crk_name": "wlslz-roks-key",
+        "crk_name": "vbwls-roks-key",
         "private_endpoint": true
       },
       "kube_type": "openshift",
       "kube_version": "4.14_openshift",
       "machine_type": "bx2.16x64",
       "name": "workload-cluster",
-      "resource_group": "wlslz-workload-rg",
+      "resource_group": "vbwls-workload-rg",
       "subnet_names": [
         "vsi-zone-1",
         "vsi-zone-2",
@@ -84,7 +84,7 @@ module "landing_zone" {
         {
           "endpoint_type": "public",
           "force_delete": true,
-          "kms_key": "wlslz-atracker-key",
+          "kms_key": "vbwls-atracker-key",
           "name": "atracker-bucket",
           "storage_class": "standard"
         }
@@ -93,7 +93,7 @@ module "landing_zone" {
       "name": "atracker-cos",
       "plan": "standard",
       "random_suffix": true,
-      "resource_group": "wlslz-service-rg",
+      "resource_group": "vbwls-service-rg",
       "use_data": false
     },
     {
@@ -102,14 +102,14 @@ module "landing_zone" {
         {
           "endpoint_type": "public",
           "force_delete": true,
-          "kms_key": "wlslz-slz-key",
+          "kms_key": "vbwls-slz-key",
           "name": "management-bucket",
           "storage_class": "standard"
         },
         {
           "endpoint_type": "public",
           "force_delete": true,
-          "kms_key": "wlslz-slz-key",
+          "kms_key": "vbwls-slz-key",
           "name": "workload-bucket",
           "storage_class": "standard"
         }
@@ -118,7 +118,7 @@ module "landing_zone" {
       "name": "cos",
       "plan": "standard",
       "random_suffix": true,
-      "resource_group": "wlslz-service-rg",
+      "resource_group": "vbwls-service-rg",
       "use_data": false
     }
   ],
@@ -153,8 +153,8 @@ module "landing_zone" {
     "access_tags": [],
     "keys": [
       {
-        "key_ring": "wlslz-slz-ring",
-        "name": "wlslz-slz-key",
+        "key_ring": "vbwls-slz-ring",
+        "name": "vbwls-slz-key",
         "policies": {
           "rotation": {
             "interval_month": 12
@@ -163,8 +163,8 @@ module "landing_zone" {
         "root_key": true
       },
       {
-        "key_ring": "wlslz-slz-ring",
-        "name": "wlslz-atracker-key",
+        "key_ring": "vbwls-slz-ring",
+        "name": "vbwls-atracker-key",
         "policies": {
           "rotation": {
             "interval_month": 12
@@ -173,8 +173,8 @@ module "landing_zone" {
         "root_key": true
       },
       {
-        "key_ring": "wlslz-slz-ring",
-        "name": "wlslz-roks-key",
+        "key_ring": "vbwls-slz-ring",
+        "name": "vbwls-roks-key",
         "policies": {
           "rotation": {
             "interval_month": 12
@@ -183,8 +183,8 @@ module "landing_zone" {
         "root_key": true
       }
     ],
-    "name": "wlslz-slz-kms",
-    "resource_group": "wlslz-service-rg",
+    "name": "vbwls-slz-kms",
+    "resource_group": "vbwls-service-rg",
     "use_hs_crypto": false,
     "use_data": false
   },
@@ -192,18 +192,18 @@ module "landing_zone" {
   "resource_groups": [
     {
       "create": true,
-      "name": "wlslz-service-rg",
-      "use_prefix": false
+      "name": "vbwls-service-rg",
+      "use_prefix": true
     },
     {
       "create": true,
-      "name": "wlslz-management-rg",
-      "use_prefix": false
+      "name": "vbwls-management-rg",
+      "use_prefix": true
     },
     {
       "create": true,
-      "name": "wlslz-workload-rg",
-      "use_prefix": false
+      "name": "vbwls-workload-rg",
+      "use_prefix": true
     }
   ],
   "secrets_manager": {
@@ -224,7 +224,7 @@ module "landing_zone" {
   "security_groups": [
     {
       "name": "management-vpe-sg",
-      "resource_group": "wlslz-management-rg",
+      "resource_group": "vbwls-management-rg",
       "rules": [
         {
           "direction": "inbound",
@@ -333,7 +333,7 @@ module "landing_zone" {
     },
     {
       "name": "workload-vpe-sg",
-      "resource_group": "wlslz-workload-rg",
+      "resource_group": "vbwls-workload-rg",
       "rules": [
         {
           "direction": "inbound",
@@ -469,10 +469,10 @@ module "landing_zone" {
     "workload"
   ],
   "transit_gateway_global": false,
-  "transit_gateway_resource_group": "wlslz-service-rg",
+  "transit_gateway_resource_group": "vbwls-service-rg",
   "virtual_private_endpoints": [
     {
-      "resource_group": "wlslz-service-rg",
+      "resource_group": "vbwls-service-rg",
       "service_name": "cos",
       "service_type": "cloud-object-storage",
       "vpcs": [
@@ -566,7 +566,7 @@ module "landing_zone" {
         }
       ],
       "prefix": "management",
-      "resource_group": "wlslz-management-rg",
+      "resource_group": "vbwls-management-rg",
       "subnets": {
         "zone-1": [
           {
@@ -695,7 +695,7 @@ module "landing_zone" {
         }
       ],
       "prefix": "workload",
-      "resource_group": "wlslz-workload-rg",
+      "resource_group": "vbwls-workload-rg",
       "subnets": {
         "zone-1": [
           {
@@ -756,7 +756,7 @@ module "landing_zone" {
     {
       "connections": [],
       "name": "management-gateway",
-      "resource_group": "wlslz-management-rg",
+      "resource_group": "vbwls-management-rg",
       "subnet_name": "vpn-zone-1",
       "vpc_name": "management"
     }

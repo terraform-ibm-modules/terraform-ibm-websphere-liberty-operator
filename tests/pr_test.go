@@ -3,10 +3,11 @@ package test
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/gruntwork-io/terratest/modules/files"
 	"github.com/gruntwork-io/terratest/modules/logger"
@@ -92,7 +93,7 @@ func TestRunSLZExample(t *testing.T) {
 			// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
 			ImplicitRequired: false,
 			TerraformVars: map[string]interface{}{
-				"cluster_id": terraform.Output(t, existingTerraformOptions, "management_cluster_id"),
+				"cluster_id": terraform.Output(t, existingTerraformOptions, "workload_cluster_id"),
 				"region":     terraform.Output(t, existingTerraformOptions, "region"),
 			},
 		})
