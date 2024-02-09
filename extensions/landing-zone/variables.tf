@@ -6,7 +6,7 @@ variable "ibmcloud_api_key" {
 
 variable "region" {
   type        = string
-  description = "Region to provision all resources created by this solution"
+  description = "Region where the target IBM Cloud OpenShift Cluster is deployed"
   nullable    = false
 }
 
