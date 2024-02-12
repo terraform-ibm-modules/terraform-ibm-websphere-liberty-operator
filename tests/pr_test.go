@@ -88,8 +88,8 @@ func TestRunSLZExample(t *testing.T) {
 		// Deploy WAS extension
 		// ------------------------------------------------------------------------------------
 
-		fmt.Println("Sleeping for 2 minutes to allow RBAC to sync")
-		time.Sleep(120 * time.Second)
+		fmt.Println("Sleeping for 3 minutes to allow RBAC to sync")
+		time.Sleep(300 * time.Second)
 
 		options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 			Testing:      t,
