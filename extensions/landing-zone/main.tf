@@ -4,8 +4,8 @@
 
 data "ibm_container_cluster_config" "cluster_config" {
   cluster_name_id = var.cluster_id
-  config_dir      = "../../kubeconfig"
-  endpoint_type   = var.cluster_config_endpoint_type != "default" ? var.cluster_config_endpoint_type : null # null represents default
+  config_dir      = "${path.module}/kubeconfig"
+  # endpoint_type   = var.cluster_config_endpoint_type != "default" ? var.cluster_config_endpoint_type : null # null represents default
 }
 
 module "websphere_liberty_operator" {
