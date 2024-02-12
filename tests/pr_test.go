@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 
@@ -86,6 +87,9 @@ func TestRunSLZExample(t *testing.T) {
 		// ------------------------------------------------------------------------------------
 		// Deploy WAS extension
 		// ------------------------------------------------------------------------------------
+
+		fmt.Println("Sleeping for 2 minutes to allow RBAC to sync")
+		time.Sleep(120 * time.Second)
 
 		options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 			Testing:      t,
