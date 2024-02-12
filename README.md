@@ -122,26 +122,26 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_add_ibm_operator_catalog"></a> [add\_ibm\_operator\_catalog](#input\_add\_ibm\_operator\_catalog) | Flag to configure the IBM Operator Catalog in the cluster before installing the IBM WebSphere Liberty operator. Default is true | `bool` | `true` | no |
+| <a name="input_add_ibm_operator_catalog"></a> [add\_ibm\_operator\_catalog](#input\_add\_ibm\_operator\_catalog) | Whether to configure the IBM Operator Catalog in the cluster before the IBM WebSphere Liberty operator is installed. Default is `true`. | `bool` | `true` | no |
 | <a name="input_cluster_config_endpoint_type"></a> [cluster\_config\_endpoint\_type](#input\_cluster\_config\_endpoint\_type) | Specify which type of endpoint to use for for cluster config access: 'default', 'private', 'vpe', 'link'. 'default' value will use the default endpoint of the cluster. | `string` | `"default"` | no |
-| <a name="input_cluster_id"></a> [cluster\_id](#input\_cluster\_id) | Id of the target IBM Cloud OpenShift Cluster | `string` | n/a | yes |
-| <a name="input_create_ws_liberty_operator_namespace"></a> [create\_ws\_liberty\_operator\_namespace](#input\_create\_ws\_liberty\_operator\_namespace) | Flag to create the namespace where to deploy the IBM WebSphere Liberty operator. Default to false | `bool` | `false` | no |
-| <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | APIkey that's associated with the account to use | `string` | `null` | no |
-| <a name="input_install_wslo_sampleapp"></a> [install\_wslo\_sampleapp](#input\_install\_wslo\_sampleapp) | Flag to deploy the WebSphere Application Server Liberty sample application. Default to false | `bool` | `false` | no |
-| <a name="input_operator_helm_release_namespace"></a> [operator\_helm\_release\_namespace](#input\_operator\_helm\_release\_namespace) | Namespace to deploy the helm releases. Default to liberty-operator-helm-release | `string` | `"liberty-operator"` | no |
-| <a name="input_region"></a> [region](#input\_region) | Cluster region | `string` | n/a | yes |
-| <a name="input_ws_liberty_operator_namespace"></a> [ws\_liberty\_operator\_namespace](#input\_ws\_liberty\_operator\_namespace) | Namespace to install the IBM WebSphere Liberty operator. Default to openshift-operators | `string` | `"openshift-operators"` | no |
-| <a name="input_ws_liberty_operator_target_namespace"></a> [ws\_liberty\_operator\_target\_namespace](#input\_ws\_liberty\_operator\_target\_namespace) | Namespace to be watched by the IBM WebSphere Liberty operator. Default to null (operator to watch all namespaces) | `string` | `null` | no |
-| <a name="input_wslo_sampleapp_name"></a> [wslo\_sampleapp\_name](#input\_wslo\_sampleapp\_name) | Application name to use for the WebSphere Application Server Liberty sample application | `string` | `"websphereliberty-app-sample"` | no |
-| <a name="input_wslo_sampleapp_namespace"></a> [wslo\_sampleapp\_namespace](#input\_wslo\_sampleapp\_namespace) | Namespace to deploy the WebSphere Application Server Liberty sample application | `string` | `"samplelibertyapp"` | no |
+| <a name="input_cluster_id"></a> [cluster\_id](#input\_cluster\_id) | Id of the target IBM Cloud OpenShift Cluster. | `string` | n/a | yes |
+| <a name="input_create_ws_liberty_operator_namespace"></a> [create\_ws\_liberty\_operator\_namespace](#input\_create\_ws\_liberty\_operator\_namespace) | Whether to create the namespace where the IBM WebSphere Liberty operator is deployed. Default is `false`. | `bool` | `false` | no |
+| <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | APIkey that's associated with the account to use. | `string` | `null` | no |
+| <a name="input_install_wslo_sampleapp"></a> [install\_wslo\_sampleapp](#input\_install\_wslo\_sampleapp) | Whether to deploy the WebSphere Application Server Liberty sample application. Default is  `false`. | `bool` | `false` | no |
+| <a name="input_operator_helm_release_namespace"></a> [operator\_helm\_release\_namespace](#input\_operator\_helm\_release\_namespace) | Namespace to deploy the helm releases. Default to liberty-operator-helm-release. | `string` | `"liberty-operator"` | no |
+| <a name="input_region"></a> [region](#input\_region) | Cluster region. | `string` | n/a | yes |
+| <a name="input_ws_liberty_operator_namespace"></a> [ws\_liberty\_operator\_namespace](#input\_ws\_liberty\_operator\_namespace) | Namespace where the IBM WebSphere Liberty operator is deployed. Default is `openshift-operators`. | `string` | `"openshift-operators"` | no |
+| <a name="input_ws_liberty_operator_target_namespace"></a> [ws\_liberty\_operator\_target\_namespace](#input\_ws\_liberty\_operator\_target\_namespace) | Namespace that the the IBM WebSphere Liberty operator watches. Default is `null`, which means that the operator watches all the namespaces. | `string` | `null` | no |
+| <a name="input_wslo_sampleapp_name"></a> [wslo\_sampleapp\_name](#input\_wslo\_sampleapp\_name) | Application name to use for the WebSphere Application Server Liberty sample application. | `string` | `"websphereliberty-app-sample"` | no |
+| <a name="input_wslo_sampleapp_namespace"></a> [wslo\_sampleapp\_namespace](#input\_wslo\_sampleapp\_namespace) | Namespace where the WebSphere Application Server Liberty sample application is deployed. | `string` | `"samplelibertyapp"` | no |
 
 ### Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_websphere_liberty_operator_sampleapp_url"></a> [websphere\_liberty\_operator\_sampleapp\_url](#output\_websphere\_liberty\_operator\_sampleapp\_url) | WebSphere Application Server Liberty sample application URL |
-| <a name="output_ws_liberty_operator_namespace"></a> [ws\_liberty\_operator\_namespace](#output\_ws\_liberty\_operator\_namespace) | Namespace where the IBM WebSphere Liberty operator is installed |
-| <a name="output_ws_liberty_operator_target_namespace"></a> [ws\_liberty\_operator\_target\_namespace](#output\_ws\_liberty\_operator\_target\_namespace) | Namespace watched by the IBM WebSphere Liberty operator |
+| <a name="output_websphere_liberty_operator_sampleapp_url"></a> [websphere\_liberty\_operator\_sampleapp\_url](#output\_websphere\_liberty\_operator\_sampleapp\_url) | WebSphere Application Server Liberty sample application URL. |
+| <a name="output_ws_liberty_operator_namespace"></a> [ws\_liberty\_operator\_namespace](#output\_ws\_liberty\_operator\_namespace) | Namespace where the IBM WebSphere Liberty operator is installed. |
+| <a name="output_ws_liberty_operator_target_namespace"></a> [ws\_liberty\_operator\_target\_namespace](#output\_ws\_liberty\_operator\_target\_namespace) | Namespace watched by the IBM WebSphere Liberty operator. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set up steps for contributors to follow -->
