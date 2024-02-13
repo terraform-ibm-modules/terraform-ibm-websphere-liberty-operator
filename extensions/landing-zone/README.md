@@ -1,3 +1,3 @@
-### # Client-To-Site VPN extension for landing zone
+### WebSphere Liberty operator extension for landing zone
 
 Tutorial: TBD

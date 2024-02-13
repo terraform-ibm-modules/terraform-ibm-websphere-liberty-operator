@@ -63,8 +63,16 @@ func TestRunSLZExample(t *testing.T) {
 	require.True(t, present, checkVariable+" environment variable not set")
 	require.NotEqual(t, "", val, checkVariable+" environment variable is empty")
 
-	// Programmatically determine region to use based on availability
-	region, _ := testhelper.GetBestVpcRegion(val, "../common-dev-assets/common-go-assets/cloudinfo-region-vpc-gen2-prefs.yaml", "eu-de")
+	// Verify region variable is set, otherwise it computes it
+	region := ""
+	checkRegion := "TF_VAR_region"
+	valRegion, presentRegion := os.LookupEnv(checkRegion)
+	if presentRegion {
+		region = valRegion
+	} else {
+		// Programmatically determine region to use based on availability
+		region, _ = testhelper.GetBestVpcRegion(val, "../common-dev-assets/common-go-assets/cloudinfo-region-vpc-gen2-prefs.yaml", "eu-de")
+	}
 
 	logger.Log(t, "Tempdir: ", tempTerraformDir)
 	existingTerraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
@@ -88,8 +96,9 @@ func TestRunSLZExample(t *testing.T) {
 		// Deploy WAS extension
 		// ------------------------------------------------------------------------------------
 
-		fmt.Println("Sleeping for 3 minutes to allow RBAC to sync")
-		time.Sleep(300 * time.Second)
+		rbacSynchSleepTime := 180
+		fmt.Println(t, fmt.Sprintf("Sleeping for %d seconds to allow RBAC to sync", rbacSynchSleepTime))
+		time.Sleep(time.Duration(rbacSynchSleepTime) * time.Second)
 
 		options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 			Testing:      t,
