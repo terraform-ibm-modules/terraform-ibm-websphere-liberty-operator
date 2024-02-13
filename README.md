@@ -22,7 +22,7 @@ For more information about the IBM WebSphere Liberty operator refer to the offic
 ## Overview
 * [terraform-ibm-websphere-liberty-operator](#terraform-ibm-websphere-liberty-operator)
 * [Examples](./examples)
-    * [WebSphere Liberty operator on IBM Cloud Red Hat OpenShift cluster complete example](./examples/complete)
+    * [Complete example for Websphere Liberty operator](./examples/complete)
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 

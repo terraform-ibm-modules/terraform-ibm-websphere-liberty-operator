@@ -42,7 +42,7 @@ variable "ws_liberty_operator_namespace" {
 
 variable "ws_liberty_operator_target_namespace" {
   type        = string
-  description = "Namespace to be watched by the IBM WebSphere Liberty operator. Default to null (operator to watch all namespaces)."
+  description = "Namespace that the IBM WebSphere Liberty operator watches. Default is `null`, which means that the operator watches all the namespaces."
   default     = null
 }
 
