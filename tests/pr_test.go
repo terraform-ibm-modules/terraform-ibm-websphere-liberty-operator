@@ -97,7 +97,7 @@ func TestRunSLZExample(t *testing.T) {
 		// ------------------------------------------------------------------------------------
 
 		rbacSynchSleepTime := 180
-		fmt.Println(t, fmt.Sprintf("Sleeping for %d seconds to allow RBAC to sync", rbacSynchSleepTime))
+		logger.Log(t, fmt.Sprintf("Sleeping for %d seconds to allow RBAC to sync", rbacSynchSleepTime))
 		time.Sleep(time.Duration(rbacSynchSleepTime) * time.Second)
 
 		options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
