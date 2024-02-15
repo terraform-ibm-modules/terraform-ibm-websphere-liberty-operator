@@ -17,22 +17,6 @@
       "matchFileNames": [
         "tests/resources/**"
       ]
-    },
-    {
-      "matchManagers": ["regex"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix"
-    },
-    {
-      "matchManagers": ["regex"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat"
-    },
-    {
-      "matchManagers": ["regex"],
-      "matchUpdateTypes": ["major"],
-      "semanticCommitType": "feat",
-      "prFooter" : "BREAKING CHANGE: dependency major version update"
     }
   ]
 }
