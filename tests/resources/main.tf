@@ -193,17 +193,17 @@ module "landing_zone" {
     {
       "create": true,
       "name": "wlslz-service-rg",
-      "use_prefix": false
+      "use_prefix": true
     },
     {
       "create": true,
       "name": "wlslz-management-rg",
-      "use_prefix": false
+      "use_prefix": true
     },
     {
       "create": true,
       "name": "wlslz-workload-rg",
-      "use_prefix": false
+      "use_prefix": true
     }
   ],
   "secrets_manager": {
