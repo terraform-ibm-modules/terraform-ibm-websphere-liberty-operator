@@ -43,8 +43,8 @@ resource "kubernetes_namespace" "helm_release_operator_namespace" {
 }
 
 locals {
-  ibm_operator_catalog_version = "v1.25-20240202.161709-9DAF3E648@sha256:92e28be4af60f68c656f52b2445aafcc052fcd0390479b868c5b0ba2d465a25a" # datasource: icr.io/cpopen/ibm-operator-catalog
-  ibm_operator_catalog_path    = "icr.io/cpopen/ibm-operator-catalog"
+  ibm_operator_catalog_image_tag_digest = "v1.25-20240202.161709-9DAF3E648@sha256:92e28be4af60f68c656f52b2445aafcc052fcd0390479b868c5b0ba2d465a25a" # datasource: icr.io/cpopen/ibm-operator-catalog
+  ibm_operator_catalog_path             = "icr.io/cpopen/ibm-operator-catalog"
 }
 
 # if add_ibm_operator_catalog is true going on with adding the IBM Operator Catalog source
@@ -72,7 +72,7 @@ resource "helm_release" "ibm_operator_catalog" {
   set {
     name  = "image.version"
     type  = "string"
-    value = local.ibm_operator_catalog_version
+    value = local.ibm_operator_catalog_image_tag_digest
   }
 }
 
@@ -208,8 +208,8 @@ resource "kubernetes_namespace" "websphere_liberty_sampleapp_namespace" {
 }
 
 locals {
-  websphere_liberty_operator_sampleapp_image_path    = "icr.io/appcafe/open-liberty/samples/getting-started"
-  websphere_liberty_operator_sampleapp_image_version = "latest@sha256:d735c2ceae5945a0f20adcbcb04e55472d2520b6d1abb6d3049c8521234d3b7a" # datasource: icr.io/appcafe/open-liberty/samples/getting-started
+  websphere_liberty_operator_sampleapp_image_path       = "icr.io/appcafe/open-liberty/samples/getting-started"
+  websphere_liberty_operator_sampleapp_image_tag_digest = "latest@sha256:d735c2ceae5945a0f20adcbcb04e55472d2520b6d1abb6d3049c8521234d3b7a" # datasource: icr.io/appcafe/open-liberty/samples/getting-started
 }
 
 resource "helm_release" "websphere_liberty_operator_sampleapp" {
@@ -236,7 +236,7 @@ resource "helm_release" "websphere_liberty_operator_sampleapp" {
   set {
     name  = "application.image.version"
     type  = "string"
-    value = local.websphere_liberty_operator_sampleapp_image_version
+    value = local.websphere_liberty_operator_sampleapp_image_tag_digest
   }
 
   set {
