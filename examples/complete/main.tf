@@ -23,7 +23,7 @@ resource "ibm_is_vpc" "vpc" {
 
 # public gws
 resource "ibm_is_public_gateway" "gateway" {
-  for_each       = toset(["1", "2", "3"])
+  for_each       = toset(["1", "2"])
   name           = "${var.prefix}-gateway-${each.key}"
   vpc            = ibm_is_vpc.vpc.id
   resource_group = module.resource_group.resource_group_id
@@ -32,7 +32,7 @@ resource "ibm_is_public_gateway" "gateway" {
 
 
 resource "ibm_is_subnet" "cluster_subnets" {
-  for_each                 = toset(["1", "2", "3"])
+  for_each                 = toset(["1", "2"])
   name                     = "${var.prefix}-subnet-${each.key}"
   vpc                      = ibm_is_vpc.vpc.id
   resource_group           = module.resource_group.resource_group_id
@@ -58,32 +58,16 @@ locals {
 
   # mapping of cluster worker pool names to subnets
   cluster_vpc_subnets = {
-    zone-1 = local.subnets,
-    zone-2 = local.subnets,
-    zone-3 = local.subnets
+    zone-1 = local.subnets
   }
 
   worker_pools = [
     {
       subnet_prefix    = "zone-1"
-      pool_name        = "default" # ibm_container_vpc_cluster automatically names default pool "default" (See https://github.com/IBM-Cloud/terraform-provider-ibm/issues/2849)
+      pool_name        = "default"
       machine_type     = "bx2.4x16"
       workers_per_zone = 1
       labels           = {}
-    },
-    {
-      subnet_prefix    = "zone-2"
-      pool_name        = "zone-2"
-      machine_type     = "bx2.4x16"
-      workers_per_zone = 1
-      labels           = { "dedicated" : "edge" }
-    },
-    {
-      subnet_prefix    = "zone-3"
-      pool_name        = "zone-3"
-      machine_type     = "bx2.4x16"
-      workers_per_zone = 1
-      labels           = { "dedicated" : "transit" }
     }
   ]
 }
@@ -112,9 +96,7 @@ module "ocp_base" {
 
 module "websphere_liberty_operator" {
   source                               = "../.."
-  region                               = var.region
   cluster_id                           = module.ocp_base.cluster_id
   create_ws_liberty_operator_namespace = false
   install_wslo_sampleapp               = true
-  ibmcloud_api_key                     = var.ibmcloud_api_key
 }

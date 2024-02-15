@@ -3,10 +3,12 @@ package test
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"os"
 	"strings"
 	"testing"
+	"time"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/gruntwork-io/terratest/modules/files"
 	"github.com/gruntwork-io/terratest/modules/logger"
@@ -61,8 +63,16 @@ func TestRunSLZExample(t *testing.T) {
 	require.True(t, present, checkVariable+" environment variable not set")
 	require.NotEqual(t, "", val, checkVariable+" environment variable is empty")
 
-	// Programmatically determine region to use based on availability
-	region, _ := testhelper.GetBestVpcRegion(val, "../common-dev-assets/common-go-assets/cloudinfo-region-vpc-gen2-prefs.yaml", "eu-de")
+	// Verify region variable is set, otherwise it computes it
+	region := ""
+	checkRegion := "TF_VAR_region"
+	valRegion, presentRegion := os.LookupEnv(checkRegion)
+	if presentRegion {
+		region = valRegion
+	} else {
+		// Programmatically determine region to use based on availability
+		region, _ = testhelper.GetBestVpcRegion(val, "../common-dev-assets/common-go-assets/cloudinfo-region-vpc-gen2-prefs.yaml", "eu-de")
+	}
 
 	logger.Log(t, "Tempdir: ", tempTerraformDir)
 	existingTerraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
@@ -86,13 +96,17 @@ func TestRunSLZExample(t *testing.T) {
 		// Deploy WAS extension
 		// ------------------------------------------------------------------------------------
 
+		rbacSynchSleepTime := 180
+		logger.Log(t, fmt.Sprintf("Sleeping for %d seconds to allow RBAC to sync", rbacSynchSleepTime))
+		time.Sleep(time.Duration(rbacSynchSleepTime) * time.Second)
+
 		options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 			Testing:      t,
 			TerraformDir: "extensions/landing-zone",
 			// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
 			ImplicitRequired: false,
 			TerraformVars: map[string]interface{}{
-				"cluster_id": terraform.Output(t, existingTerraformOptions, "management_cluster_id"),
+				"cluster_id": terraform.Output(t, existingTerraformOptions, "workload_cluster_id"),
 				"region":     terraform.Output(t, existingTerraformOptions, "region"),
 			},
 		})

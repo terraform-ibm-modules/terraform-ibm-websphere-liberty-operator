@@ -31,7 +31,7 @@ if [ ${fail} == true ]; then
   kubectl describe CatalogSource ibm-operator-catalog -n openshift-marketplace
   echo
   echo "Describe output of ibm-websphere-liberty Subscription in ${namespace} namespace"
-  kubectl describe Subscription ibm-websphere-liberty -n "${namespace}" -o wide
+  kubectl describe Subscription ibm-websphere-liberty -n "${namespace}"
   echo
   echo "List of ${WSLO_DEPLOYMENT_NAME} deployments in ${namespace} namespace"
   kubectl get deployment "${WSLO_DEPLOYMENT_NAME}" -n "${namespace}" -o wide

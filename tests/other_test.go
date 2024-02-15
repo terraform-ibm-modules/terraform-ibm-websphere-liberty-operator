@@ -2,7 +2,6 @@
 package test
 
 import (
-	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
