@@ -42,7 +42,7 @@ variable "ws_liberty_operator_target_namespace" {
 
 variable "ws_liberty_operator_install_plan_approval" {
   type        = string
-  description = "IBM WebSphere Liberty operator approval configuration for upgrade through OLM. Set to 'Manual' to manually approve the operator upgrades. Default is `Automatic`."
+  description = "IBM WebSphere Liberty operator approval configuration for OLM upgrade. Set to 'Manual' to manually approve the operator upgrades. Default is `Automatic`."
   default     = "Automatic"
   validation {
     error_message = "Invalid install plan approval configuration! Valid values are 'Automatic' or 'Manual'"
