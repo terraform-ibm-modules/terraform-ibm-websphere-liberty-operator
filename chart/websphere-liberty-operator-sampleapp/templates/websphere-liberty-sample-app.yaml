@@ -12,3 +12,7 @@ spec:
     {{ .Values.application.image.path }}:{{ required "Liberty sample app version must be provided" .Values.application.image.version }}
   manageTLS: true
   expose: true
+  service:
+    annotations:
+      service.beta.openshift.io/serving-cert-secret-name: {{ .Values.application.name }}-svc-tls-ocp
+    port: 9443
