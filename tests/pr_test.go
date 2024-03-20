@@ -29,6 +29,11 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 		TerraformDir:  exampleDir,
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
+		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+			List: []string{
+				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator_sampleapp[0]",
+			},
+		},
 	})
 	return options
 }

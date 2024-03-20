@@ -122,7 +122,7 @@ module "landing_zone" {
       "use_data": false
     }
   ],
-  "enable_transit_gateway": true,
+  "enable_transit_gateway": false,
   "f5_template_data": {
     "app_id": "null",
     "as3_declaration_url": "null",
