@@ -29,6 +29,11 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 		TerraformDir:  exampleDir,
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
+		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+			List: []string{
+				"module.websphere_liberty_operator.time_sleep.wait_sampleapp[0]", // to avoid upgrade to fail when sleep time is reduced
+			},
+		},
 	})
 	return options
 }
