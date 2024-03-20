@@ -2,7 +2,7 @@ locals {
   # sleep times definition
   sleep_time_catalog_create   = "60s"
   sleep_time_operator_create  = "120s"
-  sleep_time_sampleapp_create = "60s" # time to wait for the sampleapp route to be defined
+  sleep_time_sampleapp_create = "30s" # time to wait for the sampleapp route to be defined
 
   # helm chart names
   ibm_operator_catalog_chart                 = "ibm-operator-catalog"
@@ -253,7 +253,7 @@ resource "helm_release" "websphere_liberty_operator_sampleapp" {
 
 }
 
-# waiting for the sample app to start before checking for the URL
+# waiting for the sample app to be deployed before starting to query for the URL
 resource "time_sleep" "wait_sampleapp" {
   depends_on = [helm_release.websphere_liberty_operator_sampleapp[0]]
   count      = var.install_wslo_sampleapp == true ? 1 : 0
@@ -263,10 +263,15 @@ resource "time_sleep" "wait_sampleapp" {
 
 data "external" "websphere_liberty_operator_sampleapp_url" {
   depends_on = [time_sleep.wait_sampleapp[0]]
-  program    = ["/bin/bash", "${path.module}/scripts/get-sampleapp-url.sh"]
+  program    = ["python3", "${path.module}/scripts/get-sampleapp-url.py"]
   query = {
-    KUBECONFIG   = data.ibm_container_cluster_config.cluster_config.config_file_path
-    APPNAMESPACE = var.wslo_sampleapp_namespace
-    APPNAME      = var.wslo_sampleapp_name
+    kubeconfig   = data.ibm_container_cluster_config.cluster_config.config_file_path
+    appnamespace = var.wslo_sampleapp_namespace
+    appname      = var.wslo_sampleapp_name
   }
+}
+
+locals {
+  # getting sampleapp_url in a JSON string in the format {"sampleapp_url": "[THE URL]"}
+  sampleapp_url_response = jsondecode(data.external.websphere_liberty_operator_sampleapp_url.result.response)
 }
