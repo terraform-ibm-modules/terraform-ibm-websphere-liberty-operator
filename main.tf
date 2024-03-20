@@ -268,6 +268,7 @@ data "external" "websphere_liberty_operator_sampleapp_url" {
     kubeconfig   = data.ibm_container_cluster_config.cluster_config.config_file_path
     appnamespace = var.wslo_sampleapp_namespace
     appname      = var.wslo_sampleapp_name
+    attempts     = 30 # attempts to retrieve the sampleapp url (sleep of 10s between attempts)
   }
 }
 

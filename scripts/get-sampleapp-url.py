@@ -79,7 +79,7 @@ logging.info(input_json_formatted)
 KUBECONFIG = get_attribute(input_json, "kubeconfig", "")
 APPNAMESPACE = get_attribute(input_json, "appnamespace", "")
 APPNAME = get_attribute(input_json, "appname", "")
-ATTEMPTS = get_attribute(input_json, "attempts", 0)
+ATTEMPTS = int(get_attribute(input_json, "attempts", 0))
 
 logging.info("Input parameters:")
 logging.info(f"KUBECONFIG {KUBECONFIG}")
