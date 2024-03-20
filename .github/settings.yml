@@ -25,4 +25,4 @@ repository:
   description: "Installs a WebSphere Liberty operator on your Red Hat OpenShift Container Platform on VPC landing zone."
 
   # Use a comma-separated list of topics to set on the repo (ensure not to use any caps in the topic string).
-  topics: terraform, ibm-cloud, terraform-module, websphere-liberty-operator
+  topics: terraform, ibm-cloud, terraform-module, websphere-liberty-operator, core-team, deployable-architecture
