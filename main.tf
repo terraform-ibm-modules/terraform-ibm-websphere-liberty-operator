@@ -268,5 +268,6 @@ data "external" "websphere_liberty_operator_sampleapp_url" {
     KUBECONFIG   = data.ibm_container_cluster_config.cluster_config.config_file_path
     APPNAMESPACE = var.wslo_sampleapp_namespace
     APPNAME      = var.wslo_sampleapp_name
+    ATTEMPTS     = 30
   }
 }
