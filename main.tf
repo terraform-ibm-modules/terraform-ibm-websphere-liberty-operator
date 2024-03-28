@@ -155,6 +155,13 @@ resource "helm_release" "websphere_liberty_operator" {
     value = var.ws_liberty_operator_namespace
   }
 
+  set {
+    name  = "installplanapprovalconfig"
+    type  = "string"
+    value = var.ws_liberty_operator_install_plan_approval
+  }
+
+  # executed to approve install-plans if var.ws_liberty_operator_install_plan_approval is Manual (if Automatic no change is expected)
   provisioner "local-exec" {
     command     = "${path.module}/scripts/approve-install-plan.sh ${var.ws_liberty_operator_namespace}"
     interpreter = ["/bin/bash", "-c"]

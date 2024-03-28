@@ -5,7 +5,7 @@ metadata:
   name: ibm-websphere-liberty
   namespace: {{ .Values.operatornamespace }}
 spec:
-  installPlanApproval: Manual
+  installPlanApproval: {{ .Values.installplanapprovalconfig }}
   name: ibm-websphere-liberty
   source: ibm-operator-catalog
   sourceNamespace: openshift-marketplace

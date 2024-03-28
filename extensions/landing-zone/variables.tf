@@ -46,6 +46,17 @@ variable "ws_liberty_operator_target_namespace" {
   default     = null
 }
 
+variable "ws_liberty_operator_install_plan_approval" {
+  type        = string
+  description = "IBM WebSphere Liberty operator approval configuration for upgrade through OLM. Set to 'Manual' to manually approve the operator upgrades. Default is `Automatic`."
+  default     = "Automatic"
+  validation {
+    error_message = "Invalid install plan approval configuration! Valid values are 'Automatic' or 'Manual'"
+    condition     = contains(["Automatic", "Manual"], var.ws_liberty_operator_install_plan_approval)
+  }
+  nullable = false
+}
+
 variable "cluster_config_endpoint_type" {
   description = "Specify which type of endpoint to use for for cluster config access: 'default', 'private', 'vpe', 'link'. 'default' value will use the default endpoint of the cluster."
   type        = string
