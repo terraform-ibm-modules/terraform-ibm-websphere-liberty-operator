@@ -31,8 +31,11 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 		ResourceGroup: resourceGroup,
 		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
 			List: []string{
+				// to skip update error due to operator sample app updates
 				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator_sampleapp[0]",
-				"module.websphere_liberty_operator.time_sleep.wait_sampleapp[0]", // to avoid upgrade to fail when sleep time is reduced
+				// to avoid upgrade to fail when sleep time is reduced
+				// remove this ignore once https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/31 is merged
+				"module.websphere_liberty_operator.time_sleep.wait_sampleapp[0]",
 			},
 		},
 	})
