@@ -18,7 +18,7 @@ input_json = json.loads(input)
 json_response = {"response": ""}
 
 # debugging file init
-DEBUGFILE = "/tmp/getsampleappurl.log"
+DEBUGFILE = "getsampleappurl.log"
 if os.path.exists(DEBUGFILE):
     os.remove(DEBUGFILE)
 
@@ -88,7 +88,7 @@ logging.info(f"APPNAME: {APPNAME}")
 logging.info(f"ATTEMPTS: {ATTEMPTS}")
 
 # checking empty values
-if not (len(APPNAMESPACE.strip()) and len(APPNAME.strip())):
+if not (len(KUBECONFIG.strip()) and len(APPNAMESPACE.strip()) and len(APPNAME.strip())):
     message = "One or more mandatory parameter is empty"
     logging.error(message)
     returnFatalError(message)
