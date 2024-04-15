@@ -38,6 +38,19 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator",
 			},
 		},
+
+		IgnoreDestroys: testhelper.Exemptions{ // Ignore for consistency check
+			List: []string{
+				// adding resources to ignore for modules version update - to be all removed after the merge of https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/12 or corresponding
+				// wait_operators is removed
+				"module.ocp_base.time_sleep.wait_operators",
+				// manage_all_addons moved to false as default
+				"module.ocp_base.ibm_container_addons.addons",
+				// upgrade of cos module
+				"module.ocp_base.module.cos_instance[0].time_sleep.wait_for_authorization_policy[0]",
+				"module.ocp_base.module.cos_instance[0].ibm_resource_key.resource_key[0]",
+			},
+		},
 	})
 	return options
 }
