@@ -33,15 +33,15 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 			List: []string{
 				// to skip update error due to operator sample app updates
 				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator_sampleapp[0]",
-				// to skip update error due to operator hash changes
-				// consider to remove this once https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/16 is merged
-				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator",
+				// to be all removed after the merge of https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/12 or corresponding fix https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/36
+				// manage_all_addons moved to false as default
+				"module.ocp_base.ibm_container_addons.addons",
 			},
 		},
 
 		IgnoreDestroys: testhelper.Exemptions{ // Ignore for consistency check
 			List: []string{
-				// adding resources to ignore for modules version update - to be all removed after the merge of https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/12 or corresponding
+				// adding resources to ignore for modules version update - to be all removed after the merge of https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/12 or corresponding fix https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/36
 				// wait_operators is removed
 				"module.ocp_base.time_sleep.wait_operators",
 				// manage_all_addons moved to false as default
