@@ -7,7 +7,7 @@ offerings:
     offering_id: 70e68cb4-7026-4329-9faa-8a1e56444aba
     variations:
       - name: standard
-        mark_ready: false
+        mark_ready: true
         install_type: extension
         pre_validation: "tests/scripts/pre-validation-slz-roks.sh"
         post_validation: "tests/scripts/post-validation-slz-roks.sh"
