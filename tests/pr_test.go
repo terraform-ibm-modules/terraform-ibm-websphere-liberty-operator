@@ -34,8 +34,8 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 				// to skip update error due to operator sample app updates
 				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator_sampleapp[0]",
 				// to skip update error due to operator hash changes
-				// consider to remove this once https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/16 is merged
-				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator",
+				// consider to remove this once https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator/pull/41 is merged
+				"module.websphere_liberty_operator.helm_release.ibm_operator_catalog[0]",
 			},
 		},
 	})
