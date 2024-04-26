@@ -13,6 +13,6 @@ output "ws_liberty_operator_target_namespace" {
 }
 
 output "websphere_liberty_operator_sampleapp_url" {
-  value       = data.external.websphere_liberty_operator_sampleapp_url.result.sampleapp_url
+  value       = local.sampleapp_url_response.sampleapp_url
   description = "WebSphere Application Server Liberty sample application URL."
 }
