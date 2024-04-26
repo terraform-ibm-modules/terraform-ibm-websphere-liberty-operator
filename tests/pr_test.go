@@ -60,7 +60,7 @@ func TestRunSLZExample(t *testing.T) {
 	// ------------------------------------------------------------------------------------
 	// Deploy SLZ ROKS Cluster first since it is needed for the WAS extension input
 	// ------------------------------------------------------------------------------------
-
+	logger.Log(t, "Starting TestRunSLZExample")
 	prefix := fmt.Sprintf("was-%s", strings.ToLower(random.UniqueId()))
 	realTerraformDir := "./resources"
 	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
@@ -72,6 +72,8 @@ func TestRunSLZExample(t *testing.T) {
 	require.True(t, present, checkVariable+" environment variable not set")
 	require.NotEqual(t, "", val, checkVariable+" environment variable is empty")
 
+	logger.Log(t, "variable "+checkVariable+" correctly set")
+
 	// Verify region variable is set, otherwise it computes it
 	region := ""
 	checkRegion := "TF_VAR_region"
@@ -82,6 +84,8 @@ func TestRunSLZExample(t *testing.T) {
 		// Programmatically determine region to use based on availability
 		region, _ = testhelper.GetBestVpcRegion(val, "../common-dev-assets/common-go-assets/cloudinfo-region-vpc-gen2-prefs.yaml", "eu-de")
 	}
+
+	logger.Log(t, "Using region: ", region)
 
 	logger.Log(t, "Tempdir: ", tempTerraformDir)
 	existingTerraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
@@ -96,11 +100,15 @@ func TestRunSLZExample(t *testing.T) {
 		Upgrade: true,
 	})
 
+	logger.Log(t, "Selecting or creating workspace")
 	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
+	logger.Log(t, "Running init & apply")
 	_, existErr := terraform.InitAndApplyE(t, existingTerraformOptions)
 	if existErr != nil {
+		logger.Log(t, "Init and apply failed")
 		assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
 	} else {
+		logger.Log(t, "Going now to deploy WAS extension")
 		// ------------------------------------------------------------------------------------
 		// Deploy WAS extension
 		// ------------------------------------------------------------------------------------
