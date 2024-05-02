@@ -9,14 +9,5 @@
       ],
       "datasourceTemplate": "docker"
     }
-  ],
-  "packageRules": [
-    {
-      "description": "Do not allow SLZ version to be updated as we need to lock into version v5.1.1-rc",
-      "enabled": false,
-      "matchFileNames": [
-        "tests/resources/**"
-      ]
-    }
   ]
 }
