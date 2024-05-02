@@ -33,6 +33,8 @@ func setupOptions(t *testing.T, prefix string, exampleDir string) *testhelper.Te
 			List: []string{
 				// to skip update error due to operator sample app updates
 				"module.websphere_liberty_operator.helm_release.websphere_liberty_operator_sampleapp[0]",
+				// to skip update error due to operator catalog image version updates
+				"module.websphere_liberty_operator.helm_release.ibm_operator_catalog[0]",
 			},
 		},
 	})
