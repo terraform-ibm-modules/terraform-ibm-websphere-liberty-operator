@@ -43,7 +43,7 @@ resource "kubernetes_namespace" "helm_release_operator_namespace" {
 }
 
 locals {
-  ibm_operator_catalog_image_tag_digest = "v4.15@sha256:3aeaffc0d3f7905409013be8f19456d6a8449a78b01ec58e344dc827579b84bc" # datasource: icr.io/cpopen/ibm-operator-catalog
+  ibm_operator_catalog_image_tag_digest = "v4.15@sha256:8b6323fbc91d367e4915cbe0f4f5448b3fec763aee5801394bbd14a58b68fd02" # datasource: icr.io/cpopen/ibm-operator-catalog
   ibm_operator_catalog_path             = "icr.io/cpopen/ibm-operator-catalog"
 }
 
