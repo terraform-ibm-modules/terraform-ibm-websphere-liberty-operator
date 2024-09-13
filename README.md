@@ -82,7 +82,8 @@ data "ibm_container_cluster_config" "cluster_config" {
 }
 
 module "websphere_liberty_operator" {
-  source                                    = "https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operatorref=master"
+  # Replace "master" with a GIT release version to lock into a specific release
+  source                                    = "https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator.git?ref=master"
   cluster_id                                = var.cluster_id
   add_ibm_operator_catalog                  = true
   create_ws_liberty_operator_namespace      = false
