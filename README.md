@@ -105,7 +105,6 @@ output "websphere_liberty_operator_sample_app_url" {
   description = "URL of the IBM WebSphere Liberty operator sample app if deployed."
   value       = local.websphere_liberty_operator_sampleapp_url
 }
-
 ```
 
 ### Required IAM access policies
