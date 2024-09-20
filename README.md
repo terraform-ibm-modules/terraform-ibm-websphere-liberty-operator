@@ -50,6 +50,61 @@ unless real values don't help users know what to change.
 
 ```hcl
 
+##############################################################################
+# Config providers
+##############################################################################
+
+provider "ibm" {
+  ibmcloud_api_key = var.ibmcloud_api_key # pragma: allowlist secret
+  region           = var.region
+}
+
+provider "helm" {
+  kubernetes {
+    host  = data.ibm_container_cluster_config.cluster_config.host
+    token = data.ibm_container_cluster_config.cluster_config.token
+  }
+}
+
+provider "kubernetes" {
+  host  = data.ibm_container_cluster_config.cluster_config.host
+  token = data.ibm_container_cluster_config.cluster_config.token
+}
+
+##############################################################################
+# IBM WebSphere Liberty operator deployment on the OCP cluster
+##############################################################################
+
+data "ibm_container_cluster_config" "cluster_config" {
+  cluster_name_id = var.cluster_id
+  config_dir      = "${path.module}/kubeconfig"
+  endpoint_type   = var.cluster_config_endpoint_type != "default" ? var.cluster_config_endpoint_type : null # null represents default
+}
+
+module "websphere_liberty_operator" {
+  # Replace "master" with a GIT release version to lock into a specific release
+  source                                    = "https://github.com/terraform-ibm-modules/terraform-ibm-websphere-liberty-operator.git?ref=master"
+  cluster_id                                = var.cluster_id
+  add_ibm_operator_catalog                  = true
+  create_ws_liberty_operator_namespace      = false
+  ws_liberty_operator_namespace             = "ws-liberty-operator-namespace"
+  ws_liberty_operator_target_namespace      = "openshift-operators"
+  cluster_config_endpoint_type              = "default"
+  install_wslo_sampleapp                    = true
+  wslo_sampleapp_name                       = "sample-app"
+  wslo_sampleapp_namespace                  = "sample-app-namespace"
+  operator_helm_release_namespace           = "liberty-operator-helm-release"
+  ws_liberty_operator_install_plan_approval = "Automatic"
+}
+
+locals {
+  websphere_liberty_operator_sampleapp_url = var.install_wslo_sampleapp == true ? "https://${module.websphere_liberty_operator.websphere_liberty_operator_sampleapp_url}" : null
+}
+
+output "websphere_liberty_operator_sample_app_url" {
+  description = "URL of the IBM WebSphere Liberty operator sample app if deployed."
+  value       = local.websphere_liberty_operator_sampleapp_url
+}
 ```
 
 ### Required IAM access policies
@@ -62,17 +117,10 @@ information in the console at
 Manage > Access (IAM) > Access groups > Access policies.
 -->
 
-<!--
-You need the following permissions to run this module.
-
-- Account Management
-    - **Sample Account Service** service
-        - `Editor` platform access
-        - `Manager` service access
-    - IAM Services
-        - **Sample Cloud Service** service
-            - `Administrator` platform access
--->
+- IAM Services
+  - **Kubernetes** service
+      - `Viewer` platform access
+      - `Manager` service access
 
 <!-- NO PERMISSIONS FOR MODULE
 If no permissions are required for the module, uncomment the following
@@ -88,7 +136,7 @@ statement instead the previous block.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.7.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
 | <a name="requirement_external"></a> [external](#requirement\_external) | >=2.2.3, <3.0.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.8.0, <3.0.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.59.0, < 2.0.0 |
