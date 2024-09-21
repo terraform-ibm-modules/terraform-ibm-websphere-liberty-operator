@@ -216,7 +216,7 @@ resource "kubernetes_namespace" "websphere_liberty_sampleapp_namespace" {
 
 locals {
   websphere_liberty_operator_sampleapp_image_path       = "icr.io/appcafe/open-liberty/samples/getting-started"
-  websphere_liberty_operator_sampleapp_image_tag_digest = "latest@sha256:91589e8e215d416595b045c739724385ffe34364df06d36794dca0d6964053e7" # datasource: icr.io/appcafe/open-liberty/samples/getting-started
+  websphere_liberty_operator_sampleapp_image_tag_digest = "latest@sha256:3999aa86f788e601d305896e48a043a91861cdbf71951a1959887151390b3650" # datasource: icr.io/appcafe/open-liberty/samples/getting-started
 }
 
 resource "helm_release" "websphere_liberty_operator_sampleapp" {
