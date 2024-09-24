@@ -8,4 +8,7 @@ module "landing_zone" {
   region           = var.region
   prefix           = var.prefix
   resource_tags    = var.resource_tags
+  # GHA runtime has no access to private endpoints, so set these to false
+  verify_cluster_network_readiness    = false
+  use_ibm_cloud_private_api_endpoints = false
 }
