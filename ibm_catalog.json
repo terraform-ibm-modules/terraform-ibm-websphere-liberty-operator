@@ -68,6 +68,10 @@
           ],
           "configuration": [
             {
+              "key": "ibmcloud_api_key",
+              "required": true
+            },
+            {
               "custom_config": {
                 "config_constraints": {
                   "generationType": "2"
@@ -78,6 +82,76 @@
               },
               "key": "region",
               "required": true
+            },
+            {
+              "key": "cluster_id",
+              "required": true
+            },
+            {
+              "key": "operator_helm_release_namespace",
+              "required": true,
+              "default_value": "liberty-operator-helm-release"
+            },
+            {
+              "key": "add_ibm_operator_catalog"
+            },
+            {
+              "key": "create_ws_liberty_operator_namespace"
+            },
+            {
+              "key": "ws_liberty_operator_namespace",
+              "required": true,
+              "default_value": "openshift-operators"
+            },
+            {
+              "key": "ws_liberty_operator_target_namespace"
+            },
+            {
+              "key": "ws_liberty_operator_install_plan_approval",
+              "required": true,
+                "options": [
+                  {
+                    "displayname": "Automatic",
+                    "value": "Automatic"
+                  },
+                  {
+                    "displayname": "Manual",
+                    "value": "Manual"
+                  }
+                ]
+            },
+            {
+              "key": "cluster_config_endpoint_type",
+              "required": true,
+                "options": [
+                  {
+                    "displayname": "default",
+                    "value": "default"
+                  },
+                  {
+                    "displayname": "private",
+                    "value": "private"
+                  },
+                  {
+                    "displayname": "vpe",
+                    "value": "vpe"
+                  },
+                  {
+                    "displayname": "link",
+                    "value": "link"
+                  }
+                ]
+            },
+            {
+              "key": "install_wslo_sampleapp"
+            },
+            {
+              "key": "wslo_sampleapp_name",
+              "default_value": "websphereliberty-app-sample"
+            },
+            {
+              "key": "wslo_sampleapp_namespace",
+              "default_value": "samplelibertyapp"
             }
           ],
           "architecture": {
