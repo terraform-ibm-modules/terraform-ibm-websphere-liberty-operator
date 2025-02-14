@@ -69,7 +69,6 @@
           "configuration": [
             {
               "key": "ibmcloud_api_key",
-              "type": "password",
               "required": true
             },
             {
@@ -98,28 +97,22 @@
               }
             },
             {
-              "key": "operator_helm_release_namespace",
-              "type": "string"
+              "key": "operator_helm_release_namespace"
             },
             {
-              "key": "add_ibm_operator_catalog",
-              "type": "boolean"
+              "key": "add_ibm_operator_catalog"
             },
             {
-              "key": "create_ws_liberty_operator_namespace",
-              "type": "boolean"
+              "key": "create_ws_liberty_operator_namespace"
             },
             {
-              "key": "ws_liberty_operator_namespace",
-              "type": "string"
+              "key": "ws_liberty_operator_namespace"
             },
             {
-              "key": "ws_liberty_operator_target_namespace",
-              "type": "string"
+              "key": "ws_liberty_operator_target_namespace"
             },
             {
               "key": "ws_liberty_operator_install_plan_approval",
-              "type": "string",
               "options": [
                 {
                   "displayname": "Automatic",
@@ -133,7 +126,6 @@
             },
             {
               "key": "cluster_config_endpoint_type",
-              "type": "string",
               "options": [
                 {
                   "displayname": "default",
@@ -154,16 +146,13 @@
               ]
             },
             {
-              "key": "install_wslo_sampleapp",
-              "type": "boolean"
+              "key": "install_wslo_sampleapp"
             },
             {
-              "key": "wslo_sampleapp_name",
-              "type": "string"
+              "key": "wslo_sampleapp_name"
             },
             {
-              "key": "wslo_sampleapp_namespace",
-              "type": "string"
+              "key": "wslo_sampleapp_namespace"
             }
           ],
           "architecture": {
