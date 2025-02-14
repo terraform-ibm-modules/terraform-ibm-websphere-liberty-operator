@@ -68,6 +68,9 @@
           ],
           "configuration": [
             {
+              "key": "ibmcloud_api_key"
+            },
+            {
               "custom_config": {
                 "config_constraints": {
                   "generationType": "2"
@@ -77,7 +80,78 @@
                 "type": "vpc_region"
               },
               "key": "region",
+              "type": "string",
               "required": true
+            },
+            {
+              "key": "cluster_id",
+              "type": "string",
+              "default_value": "",
+              "display_name": "Cluster",
+              "required": true,
+              "custom_config": {
+                  "type": "cluster_var",
+                  "grouping": "deployment",
+                  "original_grouping": "deployment"
+              }
+            },
+            {
+              "key": "operator_helm_release_namespace"
+            },
+            {
+              "key": "add_ibm_operator_catalog"
+            },
+            {
+              "key": "create_ws_liberty_operator_namespace"
+            },
+            {
+              "key": "ws_liberty_operator_namespace"
+            },
+            {
+              "key": "ws_liberty_operator_target_namespace"
+            },
+            {
+              "key": "ws_liberty_operator_install_plan_approval",
+              "options": [
+                {
+                  "displayname": "Automatic",
+                  "value": "Automatic"
+                },
+                {
+                  "displayname": "Manual",
+                  "value": "Manual"
+                }
+              ]
+            },
+            {
+              "key": "cluster_config_endpoint_type",
+              "options": [
+                {
+                  "displayname": "default",
+                  "value": "default"
+                },
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "vpe",
+                  "value": "vpe"
+                },
+                {
+                  "displayname": "link",
+                  "value": "link"
+                }
+              ]
+            },
+            {
+              "key": "install_wslo_sampleapp"
+            },
+            {
+              "key": "wslo_sampleapp_name"
+            },
+            {
+              "key": "wslo_sampleapp_namespace"
             }
           ],
           "architecture": {
