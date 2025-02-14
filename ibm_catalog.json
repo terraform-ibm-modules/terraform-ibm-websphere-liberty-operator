@@ -68,8 +68,7 @@
           ],
           "configuration": [
             {
-              "key": "ibmcloud_api_key",
-              "required": true
+              "key": "ibmcloud_api_key"
             },
             {
               "custom_config": {
