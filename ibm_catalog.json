@@ -90,9 +90,9 @@
               "display_name": "Cluster",
               "required": true,
               "custom_config": {
-                  "type": "cluster_var",
-                  "grouping": "deployment",
-                  "original_grouping": "deployment"
+                "type": "cluster_var",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
               }
             },
             {
@@ -155,7 +155,6 @@
             }
           ],
           "architecture": {
-            "descriptions": "",
             "features": [
               {
                 "title": "Works with the landing zone",
