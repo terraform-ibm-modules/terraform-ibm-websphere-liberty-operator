@@ -188,7 +188,8 @@
                 "description": "Websphere installation on a landing zone VPC cluster."
               }
             ]
-          }
+          },
+          "terraform_version": "1.10.5"
         }
       ]
     }
