@@ -1,6 +1,10 @@
 <!-- Update the title -->
 # WebSphere Liberty on Red Hat OpenShift Container Platform module
 
+> ⚠️ **Deprecation Notice**
+>
+> The `terraform-ibm-websphere-liberty-operator` module is **deprecated** and no longer maintained.
+
 <!--
 Update status and "latest release" badges:
   1. For the status options, see https://terraform-ibm-modules.github.io/documentation/#/badge-status
